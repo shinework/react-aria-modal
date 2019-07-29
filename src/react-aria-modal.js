@@ -88,11 +88,13 @@ class Modal extends React.Component {
   };
 
   checkUnderlayClick = event => {
+    const element = event.target.ownerDocument.documentElement;
+
     if (
       (this.dialogNode && this.dialogNode.contains(event.target)) ||
       // If the click is on the scrollbar we don't want to close the modal.
-      event.pageX > event.target.ownerDocument.documentElement.offsetWidth ||
-      event.pageY > event.target.ownerDocument.documentElement.offsetHeight
+      event.pageX - element.scrollLeft > element.offsetWidth ||
+      event.pageY - element.scrollTop > element.offsetHeight
     )
       return;
     this.exit(event);
